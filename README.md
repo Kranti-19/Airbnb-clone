@@ -74,8 +74,7 @@ A full-stack accommodation booking platform inspired by Airbnb, enhanced with **
 ![Homepage](https://github.com/user-attachments/assets/2fe030ac-7128-41a7-ba0c-b5b3f049a0f9))
 
 ### 🔍 Signup validation
-![Signup]<img width="322" height="471" alt="image" src="https://github.com/user-attachments/assets/6784aec8-9c7d-4406-ae41-e8a1da02ef24" />
-
+![Signup](https://github.com/user-attachments/assets/f9449940-6aca-4f03-9260-3be7a2278355)
 
 ### 🤖 AI Chat
 ![Chat](https://github.com/user-attachments/assets/6784aec8-9c7d-4406-ae41-e8a1da02ef24)
