@@ -1,43 +1,159 @@
-<% layout("/layouts/boilerplate") %>
+<div class="row mt-5">
+  <h1 class="col-6 offset-3 text-center mb-4">SignUp on Wanderlust</h1>
 
-<div class="row mt-3">
-    <h1 class="col-6 offset-3">SignUp on Wanderlust</h1>
-    <div class="col-6 offset-3">
-        <form action="/signup" method="POST" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input 
-                    name="username"
-                    id="username"
-                    type="text" 
-                    class="form-control"
-                    required
-                />
-                <div class="valid-feedback">Looks good !</div>
-            </div>
+  <div class="col-md-6 offset-md-3">
+    <div class="card p-4 shadow">
 
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input 
-                    name="email"
-                    id="email"
-                    type="email" 
-                    class="form-control"
-                    required
-                />
-            </div>
+      <form action="/signup" method="POST">
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input 
-                    name="password"
-                    id="password"
-                    type="password" 
-                    class="form-control"
-                    required
-                />
-            </div>    
-            <button class="btn btn-success">SignUp</button>        
-        </form>
-    </div> 
-</div>   
+        <!-- USERNAME -->
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input 
+            type="text" 
+            id="username"
+            name="username" 
+            class="form-control form-control-lg"
+            required
+          />
+          <small id="usernameMsg" class="text-danger"></small>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input 
+            type="email" 
+            id="email"
+            name="email" 
+            class="form-control form-control-lg"
+            required
+            pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+            title="Enter valid email like example@gmail.com"
+          />
+          <small id="emailMsg" class="text-danger"></small>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+
+          <div class="input-group">
+            <input 
+              type="password" 
+              id="passwordInput"
+              name="password" 
+              class="form-control form-control-lg"
+              placeholder="Enter password"
+              required
+            />
+            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()">
+              👁️
+            </button>
+          </div>
+
+          <!-- CHECKLIST -->
+          <div id="password-rules" class="mt-3 p-2 bg-light rounded">
+            <p><b>Your password must:</b></p>
+            <p id="length" class="invalid">❌ At least 8 characters</p>
+            <p id="uppercase" class="invalid">❌ One uppercase letter</p>
+            <p id="number" class="invalid">❌ One number</p>
+            <p id="special" class="invalid">❌ One special character</p>
+          </div>
+        </div>
+
+        <button id="signupBtn" class="btn btn-danger w-100" disabled>
+          Sign Up
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const password = document.getElementById("passwordInput");
+const signupBtn = document.getElementById("signupBtn");
+
+const lengthRule = document.getElementById("length");
+const upperRule = document.getElementById("uppercase");
+const numberRule = document.getElementById("number");
+const specialRule = document.getElementById("special");
+
+function checkRule(condition, element, text) {
+  if (condition) {
+    element.classList.add("valid");
+    element.classList.remove("invalid");
+    element.innerHTML = "✔ " + text;
+  } else {
+    element.classList.add("invalid");
+    element.classList.remove("valid");
+    element.innerHTML = "❌ " + text;
+  }
+}
+
+password.addEventListener("input", () => {
+  const value = password.value;
+
+  const isLength = value.length >= 8;
+  const isUpper = /[A-Z]/.test(value);
+  const isNumber = /[0-9]/.test(value);
+  const isSpecial = /[!@#$%^&*]/.test(value);
+
+  checkRule(isLength, lengthRule, "At least 8 characters");
+  checkRule(isUpper, upperRule, "One uppercase letter");
+  checkRule(isNumber, numberRule, "One number");
+  checkRule(isSpecial, specialRule, "One special character");
+
+  // Enable button only if all valid
+  signupBtn.disabled = !(isLength && isUpper && isNumber && isSpecial);
+});
+
+// 👁️ Show/Hide Password
+function togglePassword() {
+  password.type = password.type === "password" ? "text" : "password";
+}
+
+const rules = document.getElementById("password-rules");
+
+// show when user clicks password
+password.addEventListener("focus", () => {
+  rules.style.display = "block";
+});
+
+// hide when user leaves (optional)
+password.addEventListener("input", () => {
+  rules.style.display = "block";
+});
+
+const username = document.getElementById("username");
+const usernameMsg = document.getElementById("usernameMsg");
+
+username.addEventListener("input", () => {
+  const value = username.value;
+
+  if (value.length < 3) {
+    usernameMsg.innerText = "Username must be at least 3 characters";
+  } else if (!/^[a-zA-Z0-9]+$/.test(value)) {
+    usernameMsg.innerText = "Only letters and numbers allowed";
+  } else {
+    usernameMsg.innerText = "";
+  }
+});
+
+const email = document.getElementById("email");
+const emailMsg = document.getElementById("emailMsg");
+
+email.addEventListener("input", () => {
+  const value = email.value;
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
+    emailMsg.innerText = "Enter valid email (example@gmail.com)";
+  } else {
+    emailMsg.innerText = "";
+  }
+});
+
+</script>
+

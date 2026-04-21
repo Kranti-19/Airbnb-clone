@@ -29,9 +29,10 @@
           class="form-control"
           required
         ></textarea>
+        <button type="button" onclick="generateDesc()">Generate Description</button>
       </div>
 
-      <!-- ✅ FIXED HERE -->
+      <!-- FIXED HERE -->
       <div class="mb-3">
         <label class="form-label">Upload Listing Image</label>
         <input 
@@ -56,6 +57,19 @@
       <div class="mb-3">
         <label class="form-label">Location</label>
         <input name="listing[location]" type="text" class="form-control" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select name="listing[category]" class="form-control" required>
+          <option value="">Select Category</option>
+          <option value="Rooms">Rooms</option>
+          <option value="Mountains">Mountains</option>
+          <option value="Castles">Castles</option>
+          <option value="Pools">Pools</option>
+          <option value="Camping">Camping</option>
+          <option value="Farms">Farms</option>
+        </select>
       </div>
 
       <button class="btn btn-dark add-btn">Add</button>

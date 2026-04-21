@@ -143,3 +143,20 @@ body {
     padding-left: 0;
     padding-right: 0;
 }
+
+#password-rules p {
+  font-size: 14px;
+  margin: 3px 0;
+}
+
+.valid {
+  color: green;
+}
+
+.invalid {
+  color: red;
+}
+
+#password-rules {
+  display: none;
+}

@@ -15,11 +15,13 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const expressLayouts = require("express-ejs-layouts");
 
 // ROUTES
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const aiRoutes = require("./routes/ai"); 
 
 // DB URL
 const dbUrl = process.env.ATLASDB_URL;
@@ -33,13 +35,19 @@ async function main() {
   await mongoose.connect(dbUrl);
 }
 
+app.use(expressLayouts);
+app.set("layout", "layouts/boilerplate");
+
 // VIEW ENGINE
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 
-// MIDDLEWARE
+// ================= MIDDLEWARE =================
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 
@@ -87,18 +95,27 @@ app.use((req, res, next) => {
   next();
 });
 
+// ================= ROUTES =================
 
-// ✅ ROOT ROUTE FIX (IMPORTANT)
+// ROOT
 app.get("/", (req, res) => {
   res.redirect("/listings");
 });
 
-// ROUTES
-app.use("/listings", listingRouter);
+// NORMAL ROUTES
+// ✅ FIRST: nested routes
 app.use("/listings/:id/reviews", reviewRouter);
+
+// ✅ THEN: main listings
+app.use("/listings", listingRouter);
+
+// ✅ user routes
 app.use("/", userRouter);
 
-// 404 HANDLER
+// AI routes
+app.use("/ai", aiRoutes);
+// ================= ERROR HANDLING =================
+
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));
 });

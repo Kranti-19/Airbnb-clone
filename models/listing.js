@@ -3,6 +3,25 @@ const Schema = mongoose.Schema;
 const Review = require("./review.js");
 
 const listingSchema = new Schema({
+
+  category: {
+  type: String,
+  enum: [
+  "Trending",
+  "Rooms",
+  "Iconic Cities",
+  "Mountains",
+  "Castles",
+  "Pools",
+  "Camping",
+  "Farms",
+  "Arctic",
+  "Domes",
+  "Boats"
+],
+  default: "Trending"
+  },
+
   title: {
     type: String,
     required: true,

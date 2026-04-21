@@ -1,31 +1,61 @@
-<% layout("/layouts/boilerplate") %>
+<div class="row mt-5">
+  <h1 class="col-md-6 offset-md-3 text-center mb-4">Login</h1>
 
-<div class="row mt-3">
-    <h1 class="col-6 offset-3">Login</h1>
-    <div class="col-6 offset-3">
-        <form action="/login" method="POST" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input 
-                    name="username"
-                    id="username"
-                    type="text" 
-                    class="form-control"
-                    required
-                />
-            </div>
+  <div class="col-md-6 offset-md-3">
+    <div class="card p-4 shadow">
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input 
-                    name="password"
-                    id="password"
-                    type="password" 
-                    class="form-control"
-                    required
-                />
-            </div>    
-            <button class="btn btn-success">SignUp</button>        
-        </form>
-    </div> 
-</div>   
+      <form action="/login" method="POST">
+
+        <!-- USERNAME -->
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input 
+            type="text" 
+            name="username" 
+            class="form-control form-control-lg"
+            placeholder="Enter username"
+            required
+          />
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+
+          <div class="input-group">
+            <input 
+              type="password" 
+              id="loginPassword"
+              name="password" 
+              class="form-control form-control-lg"
+              placeholder="Enter password"
+              required
+            />
+
+            <button type="button" class="btn btn-outline-secondary" onclick="toggleLoginPassword()">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <!-- LOGIN BUTTON -->
+        <button class="btn btn-danger w-100">Login</button>
+
+        <!-- SIGNUP LINK -->
+        <p class="text-center mt-3">
+          Don’t have an account? 
+          <a href="/signup">Sign up</a>
+        </p>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleLoginPassword() {
+  const input = document.getElementById("loginPassword");
+  input.type = input.type === "password" ? "text" : "password";
+}
+</script>
